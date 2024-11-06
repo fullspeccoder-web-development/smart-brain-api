@@ -3,7 +3,7 @@ const app = express();
 const cors = require("cors");
 const bcrypt = require("bcrypt-nodejs");
 const knex = require("knex");
-import handleRegister from "./controllers/register";
+import handleRegister from "./controllers/register.js";
 const signin = require("./controllers/signin");
 const profile = require("./controllers/profile");
 const image = require("./controllers/image");
