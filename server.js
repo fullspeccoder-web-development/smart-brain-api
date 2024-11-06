@@ -4,10 +4,10 @@ import cors from "cors";
 import bcrypt from "bcrypt-nodejs";
 import knex from "knex";
 import handleRegister from "./controllers/register.js";
-const signin = require("./controllers/signin");
-const profile = require("./controllers/profile");
-const image = require("./controllers/image");
-const clarifai = require("./controllers/clarifai");
+import handleSignIn from "./controllers/signin.js";
+import handleClarifai from "./controllers/clarifai.js";
+import handleProfileGet from "./controllers/profile.js";
+import handleImage from "./controllers/image.js";
 
 const db = knex({
   client: "pg",
@@ -29,15 +29,15 @@ app.get("/", (req, res) => {
   res.json("Welcome to the face recognition server");
 });
 
-app.post("/clarifai", clarifai.handleClarifai);
+app.post("/clarifai", handleClarifai);
 
-app.post("/signin", signin.handleSignIn(db, bcrypt));
+app.post("/signin", handleSignIn(db, bcrypt));
 
 app.post("/register", handleRegister(db, bcrypt));
 
-app.get("/profile/:userId", profile.handleProfileGet(db));
+app.get("/profile/:userId", handleProfileGet(db));
 
-app.put("/image", image.handleImage(db));
+app.put("/image", handleImage(db));
 
 app.listen(3000, () => {
   console.log("Server is running...");

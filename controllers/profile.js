@@ -15,6 +15,4 @@ const handleProfileGet = (db) => (req, res) => {
     .catch((err) => res.status(400).json(err));
 };
 
-module.exports = {
-  handleProfileGet,
-};
+export default handleProfileGet;
