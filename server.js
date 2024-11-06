@@ -3,7 +3,7 @@ const app = express();
 const cors = require("cors");
 const bcrypt = require("bcrypt-nodejs");
 const knex = require("knex");
-const register = require("./controllers/register");
+import handleRegister from "./controllers/register";
 const signin = require("./controllers/signin");
 const profile = require("./controllers/profile");
 const image = require("./controllers/image");
@@ -12,10 +12,13 @@ const clarifai = require("./controllers/clarifai");
 const db = knex({
   client: "pg",
   connection: {
-    host: "127.0.0.1",
-    user: "jacobwilson",
-    password: "",
-    database: "smart-brain",
+    connectionString: process.env.DATABASE_URL,
+    ssl: { rejectUnauthorized: false },
+    host: process.env.DATABASE_HOST,
+    port: 5432,
+    user: process.env.DATABASE_USER,
+    password: process.env.DATABASE_PW,
+    database: process.env.DATABASE_DB,
   },
 });
 
@@ -30,7 +33,7 @@ app.post("/clarifai", clarifai.handleClarifai);
 
 app.post("/signin", signin.handleSignIn(db, bcrypt));
 
-app.post("/register", register.handleRegister(db, bcrypt));
+app.post("/register", handleRegister(db, bcrypt));
 
 app.get("/profile/:userId", profile.handleProfileGet(db));
 
