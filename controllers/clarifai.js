@@ -44,6 +44,4 @@ const handleClarifai = (req, res) => {
   );
 };
 
-module.exports = {
-  handleClarifai,
-};
+export default handleClarifai;
